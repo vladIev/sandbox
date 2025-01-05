@@ -39,7 +39,9 @@ function(add_targets)
     list(FILTER CPP_FILES EXCLUDE REGEX "\\..\\.cpp$")
 
     foreach(TARGET ${TARGETS})
-        get_filename_component(TARGET_NAME ${TARGET} NAME_WE)
+        get_filename_component(FULL_TARGET_NAME ${TARGET} NAME)
+        string(REGEX REPLACE "\\.[^.]*$" "" TARGET_NAME ${FULL_TARGET_NAME})
+
         add_executable(${TARGET_NAME} ${TARGET} ${CPP_FILES})
 
         if(NOT "${LIBRARIES}" STREQUAL "")
