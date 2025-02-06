@@ -6,7 +6,7 @@
 #include <mutex>
 #include <thread>
 
-int NUM_THREADS = std::thread::hardware_concurrency();
+int NUM_THREADS = std::thread::hardware_concurrency() * 2;
 
 void BM_lock_mutex(benchmark::State& state)
 {
