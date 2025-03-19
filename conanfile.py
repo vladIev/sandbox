@@ -9,6 +9,9 @@ class Template(ConanFile):
     def requirements(self):
         self.requires("gtest/1.14.0")
         self.requires("benchmark/1.8.4")
+        self.requires("boost/1.86.0")
+        self.requires("openssl/3.3.2")
+        self.requires("nlohmann_json/3.11.3")
 
     def layout(self):
         cmake_layout(self)

@@ -6,6 +6,7 @@ VS code friendly template for personal C++ projects
 
 ```
 conan install . --build=missing
+conan install . -s build_type=Debug --build=missing
 ```
 
 ## Conan profile example:
