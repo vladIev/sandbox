@@ -1,6 +1,6 @@
 ## Description
 
-VS code friendly template for personal C++ projects 
+Personal sandbox
 
 ## Install
 
