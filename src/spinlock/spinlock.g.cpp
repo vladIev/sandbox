@@ -35,22 +35,22 @@ void test_spinlock()
 
 TEST(SpinlockTest, sp_naive)
 {
-	test_spinlock<Spinlock<3>>();
+	test_spinlock<SpinlockNaive>();
 }
 
 TEST(SpinlockTest, sp_with_proper_barriers)
 {
-	test_spinlock<Spinlock<1>>();
+	test_spinlock<SpinlockWithBarriers>();
 }
 
 TEST(SpinlockTest, sp_with_load)
 {
-	test_spinlock<Spinlock<2>>();
+	test_spinlock<SpinlockWithLoad>();
 }
 
 TEST(SpinlockTest, sp_final)
 {
-	test_spinlock<Spinlock<0>>();
+	test_spinlock<SpinlockWithBackoff>();
 }
 
 int main()

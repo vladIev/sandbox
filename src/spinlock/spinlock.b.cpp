@@ -6,7 +6,7 @@
 #include <mutex>
 #include <thread>
 
-int NUM_THREADS = std::thread::hardware_concurrency() * 2;
+int NUM_THREADS = std::thread::hardware_concurrency();
 
 void BM_lock_mutex(benchmark::State& state)
 {
@@ -48,7 +48,7 @@ void BM_lock_naive(benchmark::State& state)
 		count = 0;
 	}
 
-	static Spinlock<3> spinlock;
+	static SpinlockNaive spinlock;
 	for(auto _ : state)
 	{
 		spinlock.lock();
@@ -66,7 +66,7 @@ void BM_lock_with_proper_barriers(benchmark::State& state)
 	{
 		count = 0;
 	}
-	static Spinlock<1> spinlock;
+	static SpinlockWithBarriers spinlock;
 	for(auto _ : state)
 	{
 		spinlock.lock();
@@ -84,7 +84,7 @@ void BM_lock_with_load(benchmark::State& state)
 	{
 		count = 0;
 	}
-	static Spinlock<2> spinlock;
+	static SpinlockWithLoad spinlock;
 	for(auto _ : state)
 	{
 		spinlock.lock();
@@ -95,14 +95,14 @@ void BM_lock_with_load(benchmark::State& state)
 
 BENCHMARK(BM_lock_with_load)->ThreadRange(2, NUM_THREADS)->UseRealTime();
 
-void BM_lock_final(benchmark::State& state)
+void BM_lock_backoff(benchmark::State& state)
 {
 	static size_t count = 0;
 	if(state.thread_index() == 0)
 	{
 		count = 0;
 	}
-	static Spinlock<0> spinlock;
+	static SpinlockWithBackoff spinlock;
 	for(auto _ : state)
 	{
 		spinlock.lock();
@@ -111,4 +111,4 @@ void BM_lock_final(benchmark::State& state)
 	}
 }
 
-BENCHMARK(BM_lock_final)->ThreadRange(2, NUM_THREADS)->UseRealTime();
+BENCHMARK(BM_lock_backoff)->ThreadRange(2, NUM_THREADS)->UseRealTime();
